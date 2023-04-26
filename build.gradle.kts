@@ -7,7 +7,7 @@ val koin_version: String by project
 plugins {
     kotlin("jvm") version "1.8.21"
     id("io.ktor.plugin") version "2.3.0"
-                id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
 }
 
 group = "com.romanhruska"
@@ -40,7 +40,7 @@ dependencies {
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
 
     // Koin core features
-    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-core:$koin_version") // had to be 3.4.0 in order to follow the init...
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
 }
