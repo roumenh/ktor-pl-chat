@@ -28,15 +28,13 @@ class RoomController (
     }
 
     suspend fun sendMessage(senderUsername: String, message: String) {
+        val messageEntity = Message(  // moved out of the foreach lambda
+            text = message,
+            username = senderUsername,
+            timestamp = System.currentTimeMillis()
+        )
+        messageDataSource.insertMessage(messageEntity)
         members.values.forEach { member ->
-            // TODO why is the lambda here?
-            val messageEntity = Message(
-                text = message,
-                username = senderUsername,
-                timestamp = System.currentTimeMillis()
-            )
-            messageDataSource.insertMessage(messageEntity) // should this really be inside the lambda?
-
             // now we want to send the message to all members in the room...
             val parsedMessage = Json.encodeToString(messageEntity)  // import kotlinx.serialization.encodeToString
             member.socket.send(Frame.Text(parsedMessage))
