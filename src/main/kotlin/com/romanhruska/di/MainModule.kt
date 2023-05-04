@@ -22,7 +22,7 @@ val mainModule = module {
 
     single<Database> {
         val props = Properties()
-        props.load(javaClass.classLoader.getResourceAsStream("application.properties"))
+        props.load(javaClass.classLoader.getResourceAsStream("keys/keys"))
         Database.connect(
             url = props.getProperty("db.url"),
             driver = props.getProperty("db.driver"),
