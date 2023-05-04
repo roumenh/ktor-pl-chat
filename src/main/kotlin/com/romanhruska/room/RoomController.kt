@@ -36,6 +36,7 @@ class RoomController (
             timestamp = System.currentTimeMillis()
         )
         //messageDataSource.insertMessage(messageEntity)
+        DbManager.insertMessage(messageEntity) // this is new
         // TODO !!!!!!!!
         members.values.forEach { member ->
             // now we want to send the message to all members in the room...

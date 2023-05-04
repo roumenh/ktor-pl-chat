@@ -9,6 +9,6 @@ data class Message(
     val text: String,
     val username: String,
     val timestamp: Long,
-    @BsonId
+    @BsonId         // is this needed? probably yeah
     val id: String = ObjectId().toString()  //will generate random object ID
 )
