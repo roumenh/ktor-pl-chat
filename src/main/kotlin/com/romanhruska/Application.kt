@@ -16,6 +16,7 @@ fun Application.module() {
         slf4jLogger()
         modules(mainModule)
     }
+    configureDbVariables()
     configureSockets()
     configureSerialization()
     configureMonitoring()
