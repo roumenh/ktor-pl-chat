@@ -1,9 +1,10 @@
-package com.romanhruska.data
+package com.romanhruska.data.mongo
 
 import com.romanhruska.data.model.Message
+import com.romanhruska.data.MessageDataSource
 import org.litote.kmongo.coroutine.CoroutineDatabase
 
-class MessageDataSourceImpl(
+class MongoMessageDataSourceImpl(
     private val db: CoroutineDatabase
 ) : MessageDataSource {
 

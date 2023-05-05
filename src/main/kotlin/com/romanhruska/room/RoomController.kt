@@ -2,7 +2,6 @@ package com.romanhruska.room
 
 import com.romanhruska.data.MessageDataSource
 import com.romanhruska.data.model.Message
-import com.romanhruska.data.mysql.DbManager
 import io.ktor.websocket.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -10,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class RoomController (
     //private val messageDataSource: MessageDataSource,
-    private val DbManager: DbManager
+    private val MysqlDataSource: MessageDataSource
 ) {
     private val members = ConcurrentHashMap<String, Member>() // key is username, value is Member
 
@@ -35,9 +34,8 @@ class RoomController (
             username = senderUsername,
             timestamp = System.currentTimeMillis()
         )
-        //messageDataSource.insertMessage(messageEntity)
-        DbManager.insertMessage(messageEntity) // this is new
-        // TODO !!!!!!!!
+        MysqlDataSource.insertMessage(messageEntity)
+
         members.values.forEach { member ->
             // now we want to send the message to all members in the room...
             val parsedMessage = Json.encodeToString(messageEntity)  // import kotlinx.serialization.encodeToString
@@ -46,7 +44,7 @@ class RoomController (
     }
 
     suspend fun getAllMessages(): List<Message> {
-        return DbManager.getAllMessages()
+        return MysqlDataSource.getAllMessages()
     }
 
     suspend fun tryDisconnect(username: String) {

@@ -1,9 +1,8 @@
 package com.romanhruska.di
 
 import com.romanhruska.data.MessageDataSource
-import com.romanhruska.data.MessageDataSourceImpl
-import com.romanhruska.data.mysql.DbManager
-import com.romanhruska.data.mysql.DbManagerImpl
+import com.romanhruska.data.mongo.MongoMessageDataSourceImpl
+import com.romanhruska.data.mysql.MysqlMessageDataSourceImpl
 import com.romanhruska.room.RoomController
 import org.koin.dsl.module
 import org.ktorm.database.Database
@@ -17,7 +16,7 @@ val mainModule = module {
         KMongo.createClient()
             .coroutine
             .getDatabase("message_db")
-    } // returns CoroutineDatabase
+    } // returns CoroutineDatabase //TODO remove
 
 
     single<Database> {
@@ -33,11 +32,11 @@ val mainModule = module {
      // should return Database
 
     single<MessageDataSource> {
-        MessageDataSourceImpl(get())
+        MongoMessageDataSourceImpl(get())
     }
 
-    single<DbManager> {
-        DbManagerImpl(get())
+    single<MessageDataSource> {
+        MysqlMessageDataSourceImpl(get())  // this is where I decide what source of data to use
     }
 
     single {

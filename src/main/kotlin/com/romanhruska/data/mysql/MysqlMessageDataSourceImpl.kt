@@ -1,15 +1,16 @@
 package com.romanhruska.data.mysql
 
 import com.romanhruska.data.model.Message
+import com.romanhruska.data.MessageDataSource
 import org.ktorm.database.Database
 import org.ktorm.database.asIterable
 import org.ktorm.dsl.from
 import org.ktorm.dsl.insert
 import org.ktorm.dsl.select
 
-class DbManagerImpl(
+class MysqlMessageDataSourceImpl(
     private val database: Database
-): DbManager {
+): MessageDataSource {
     override suspend fun getAllMessages(): List<Message> {
         val messages = database.from(MessagesTable).select()
         return messages.rowSet.asIterable().map { row ->
